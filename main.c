@@ -1,12 +1,19 @@
 #include <stdio.h>
 #include <string.h>
 
+struct Conta{
+  char numeroConta[7];
+  int ativo;
+  float saldo;
+  char tipoConta[20];
+};
 struct Cliente{
   char nome[255];
   char rg[12];
   char cpf[12];
-  float saldo;
   char senha[7];
+  struct Conta contas[3];
+  int contador;
 };
 
 struct Gerente{
@@ -86,10 +93,9 @@ int main(void) {
 
               printf("Digite uma senha de até 6 digitos: \n");
               scanf("%s", &*agencia.clientes[contadorClientes].senha);
-
-              agencia.clientes[contadorClientes].saldo = 0;
               contadorClientes++;
             }
+
             if(entradaMenuGerente == 4){
               printf("\n----------Lista de clientes----------\n");
               for(int i = 0; i< contadorClientes; i++){
@@ -98,6 +104,11 @@ int main(void) {
                 printf("RG : %s\n", agencia.clientes[i].rg);
                 printf("Nome : %s\n", agencia.clientes[i].nome);
                 printf("-------------------------------\n");
+              }
+              if(entradaMenuGerente == 2){
+                  printf("\n----------Digite o CPF do cliente\n");
+                  char entradaCPF[12];
+                  scanf("%s", &entradaCPF[12]);
               }
             }
 
