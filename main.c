@@ -27,7 +27,7 @@ struct Cliente{
   struct ContaEspecial contaespecial;
 };
 struct Gerente{
-  char login[6];
+  char login[12];
   char senha[7];
 };
 struct Agencia{
@@ -42,7 +42,7 @@ int numeroCoontas = 1000;
 
 //instancia a agencia
   struct Agencia agencia;
-  strcpy(agencia.gerente.login, "12345");
+  strcpy(agencia.gerente.login, "coleguinha");
   strcpy(agencia.gerente.senha, "batata");
 
 //inicia o contador de clientes da agencia
@@ -57,6 +57,7 @@ int numeroCoontas = 1000;
     scanf("%d", &entradaUser);
 
     if(entradaUser == 2){
+      int entradaDeposito;
       int entrada = 1;
       while(entrada != 0){
         printf("----------Menu Usuario--------\n");
@@ -67,13 +68,13 @@ int numeroCoontas = 1000;
 
         scanf("%d", &entrada);
         if(entrada == 1){
-          printf("------Depósito------");
-          printf("Em qual tipo de conta quer depositar?");
+          printf("\n------Depósito------\n");
+          printf("Em qual tipo de conta quer depositar?\n");
           printf("Digite [1] para depositar na conta corrente\n");
           printf("Digite [2] para depositar na conta poupanca\n");
           printf("Digite [3] para depositar na conta especial\n");
-          scanf("%d", &entrada);
-          if(entrada == 1){
+          scanf("%d", &entradaDeposito);
+          if(entradaDeposito == 1){
             printf("Digite o número da sua conta:\n");
             int entradaConta;
             scanf("%d", &entradaConta);
@@ -87,12 +88,12 @@ int numeroCoontas = 1000;
                   printf("\nValor depositado\n");
                 }
                 else{
-                  printf("Solicite o ativamento da conta antes de depositar");
+                  printf("Solicite o ativamento da conta antes de depositar\n");
                 }
               }
             }
           }
-          if(entrada == 2){
+          if(entradaDeposito == 2){
             printf("Digite o número da sua conta:\n");
             int entradaConta;
             scanf("%d", &entradaConta);
@@ -112,7 +113,7 @@ int numeroCoontas = 1000;
             }
 
           }
-          if(entrada == 3){
+          if(entradaDeposito == 3){
             printf("Digite o número da sua conta:\n");
             int entradaConta;
             scanf("%d", &entradaConta);
@@ -133,14 +134,14 @@ int numeroCoontas = 1000;
           }
         }
         if(entrada == 2){
-          printf("------Saque------");
-          printf("De qual tipo de conta quer sacar?");
+          printf("\n------Saque------\n");
+          printf("De qual tipo de conta quer sacar?\n");
           printf("Digite [1] para sacar da conta corrente\n");
           printf("Digite [2] para sacar da conta poupanca\n");
           printf("Digite [3] para sacar da conta especial\n");
-
-          scanf("%d", &entrada);
-          if(entrada == 1){
+          int entradaSaque;
+          scanf("%d", &entradaSaque);
+          if(entradaSaque == 1){
             printf("Digite o número da sua conta:\n");
             int entradaConta;
             scanf("%d", &entradaConta);
@@ -152,17 +153,17 @@ int numeroCoontas = 1000;
                   scanf("%f", &entradaValor);
                   if (entradaValor<=agencia.clientes[i].contacorrente.saldo){
                     agencia.clientes[i].contacorrente.saldo= agencia.clientes[i].contacorrente.saldo - entradaValor;
-                    printf("Saque realizado");
+                    printf("Saque realizado\n");
                   }
                   else{
-                    printf("ERRO: voce não tem o valor disponivel");
+                    printf("ERRO: voce não tem o valor disponivel\n");
                   }
                 }
               }
             }
           }
 
-          if(entrada == 2){
+          if(entradaSaque == 2){
             printf("Digite o número da sua conta:\n");
             int entradaConta;
             scanf("%d", &entradaConta);
@@ -174,17 +175,17 @@ int numeroCoontas = 1000;
                   scanf("%f", &entradaValor);
                   if (entradaValor<=agencia.clientes[i].contapoupanca.saldo){
                     agencia.clientes[i].contapoupanca.saldo= agencia.clientes[i].contapoupanca.saldo - entradaValor;
-                    printf("Saque realizado");
+                    printf("Saque realizado\n");
                   }
                   else{
-                    printf("ERRO: voce não tem o valor disponivel");
+                    printf("ERRO: voce não tem o valor disponivel \n");
                   }
                 }
               }
             }
           }
 
-          if(entrada == 3){
+          if(entradaSaque == 3){
             printf("Digite o número da sua conta:\n");
             int entradaConta;
             scanf("%d", &entradaConta);
@@ -195,7 +196,7 @@ int numeroCoontas = 1000;
                   float entradaValor;
                   scanf("%f", &entradaValor);
                   agencia.clientes[i].contaespecial.saldo= agencia.clientes[i].contaespecial.saldo - entradaValor;
-                  printf("Saque realizado");
+                  printf("Saque realizado \n");
                 }
               }
             }
@@ -286,7 +287,6 @@ int numeroCoontas = 1000;
                   scanf("%s", &*agencia.clientes[contadorClientes].senha);
 
                   contadorClientes++;
-                  printf("%d", contadorClientes);
 
                   agencia.clientes[contadorClientes].contacorrente.saldo = 0;
                   agencia.clientes[contadorClientes].contaespecial.saldo = 0;
@@ -305,13 +305,13 @@ int numeroCoontas = 1000;
                   printf("Nome : %s \n", agencia.clientes[i].nome);
                   printf("CPF : %s \n", agencia.clientes[i].cpf);
                   printf("RG : %s \n", agencia.clientes[i].rg);
-                  printf("-------------------------------------------------");
+                  printf("\n-------------------------------------------------\n");
                   
                   printf("Numero da conta corrente: %d\nSaldo da Conta corrente: %.2f\nStatus da conta corrente: %d\n", agencia.clientes[i].contacorrente.numeroConta, agencia.clientes[i].contacorrente.saldo, agencia.clientes[i].contacorrente.ativo);
-                  printf("-------------------------------------------------");
+                  printf("\n-------------------------------------------------\n");
                   
                   printf("Numero da conta poupança: %d\nSaldo da Conta poupança: %.2f\nStatus da conta poupança: %d\n", agencia.clientes[i].contapoupanca.numeroConta, agencia.clientes[i].contapoupanca.saldo, agencia.clientes[i].contapoupanca.ativo);
-                  printf("-------------------------------------------------");
+                  printf("\n-------------------------------------------------\n");
                   
                   printf("Numero da conta especial: %d\nSaldo da Conta especial: %.2f\nStatus da conta especial: %d\n", agencia.clientes[i].contaespecial.numeroConta, agencia.clientes[i].contaespecial.saldo, agencia.clientes[i].contaespecial.ativo);
 
@@ -354,7 +354,7 @@ int numeroCoontas = 1000;
                     printf("Digite a nova senha: \n");
                     scanf("%s", &*agencia.clientes[i].senha);
 
-                    printf("Atualização dos dados concluida");
+                    printf("Atualização dos dados concluida \n");
 
                   }
                 }
@@ -378,19 +378,19 @@ int numeroCoontas = 1000;
                         agencia.clientes[i].contacorrente.ativo = 1;
                         agencia.clientes[i].contacorrente.numeroConta = numeroCoontas++;
                         numeroCoontas++;
-                        printf("Sua conta foi ativada, o número é: %d", agencia.clientes[i].contacorrente.numeroConta);
+                        printf("Sua conta foi ativada, o número é: %d \n", agencia.clientes[i].contacorrente.numeroConta);
                       }
                       if(entrada == 2){
                         agencia.clientes[i].contapoupanca.ativo = 1;
                         agencia.clientes[i].contapoupanca.numeroConta = numeroCoontas++;
                         numeroCoontas++;
-                        printf("Sua conta foi ativada, o número é: %d", agencia.clientes[i].contapoupanca.numeroConta);
+                        printf("Sua conta foi ativada, o número é: %d \n", agencia.clientes[i].contapoupanca.numeroConta);
                       }
                       if(entrada == 3){
                         agencia.clientes[i].contaespecial.ativo = 1;
                         agencia.clientes[i].contaespecial.numeroConta = numeroCoontas++;
                         numeroCoontas++;
-                        printf("Sua conta foi ativada, o número é: %d", agencia.clientes[i].contaespecial.numeroConta);
+                        printf("Sua conta foi ativada, o número é: %d \n", agencia.clientes[i].contaespecial.numeroConta);
                       }
                     
                   }
@@ -399,7 +399,7 @@ int numeroCoontas = 1000;
             }//fecha o while do gerente
           }//fecha o if de comparação da senha
           else{
-            printf("senha incorreta!");
+            printf("senha incorreta! \n");
           }
         }//fecha if de comparação do login
         else{
