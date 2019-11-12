@@ -55,8 +55,9 @@ int mostraMenuGerente(void)
 
 //Solicita os dados do cliente e colocar em um struct cliente e retorna o cliente
 //função finalizada
-struct Cliente entradaDadosCliente(struct Cliente cliente)
+struct Cliente entradaDadosCliente()
 {
+    struct Cliente cliente;
     printf("\n----------Cadastro de Clientes----------\n");
 
     printf("Digite o nome do cliente: \n");
@@ -72,14 +73,6 @@ struct Cliente entradaDadosCliente(struct Cliente cliente)
     scanf("%s", &*cliente.senha);
 
     //inicializa o saldo em zero
-    cliente.contacorrente.saldo = 0;
-    cliente.contaespecial.saldo = 0;
-    cliente.contapoupanca.saldo = 0;
-    //0 quer dizer que nao está ativa
-    cliente.contacorrente.ativo = 0;
-    cliente.contaespecial.ativo = 0;
-    cliente.contapoupanca.ativo = 0;
-
     return cliente;
 }
 
@@ -112,6 +105,7 @@ int cadastraCliente(struct Cliente cliente)
             {
                 ultimo = ultimo->proximo;
             }
+            novo->proximo = NULL;
             ultimo->proximo = novo;
         }
     }
@@ -121,32 +115,19 @@ int cadastraCliente(struct Cliente cliente)
 //função teoricamente finalizada e inutil
 int ativaConta(struct Cliente cliente)
 {
-    printf("\n----------Ativação de contas----------\n");
-    printf("Qual tipo de conta pretende ativar? \n");
-    printf("Digite [1] para ativar a conta corrente \n");
-    printf("Digite [2] para ativar a conta poupança \n");
-    printf("Digite [3] para ativar a conta especial \n");
-    int entrada;
-    scanf("%d", &entrada);
-
-    if (entrada == 1)
-    {
         cliente.contacorrente.ativo = 1;
-        cliente.contacorrente.numeroConta = rand() % 100000;
+        cliente.contacorrente.numeroConta = rand() % 10000;
+        cliente.contacorrente.saldo = 0;
         printf("Sua conta foi ativada, o número é: %d \n", cliente.contacorrente.numeroConta);
-    }
-    if (entrada == 2)
-    {
         cliente.contapoupanca.ativo = 1;
-        cliente.contapoupanca.numeroConta = rand() % 100000;
+        cliente.contapoupanca.numeroConta = rand() % 10000;
+        cliente.contapoupanca.saldo = 0;
         printf("Sua conta foi ativada, o número é: %d \n", cliente.contapoupanca.numeroConta);
-    }
-    if (entrada == 3)
-    {
         cliente.contaespecial.ativo = 1;
-        cliente.contaespecial.numeroConta = rand() % 100000;
+        cliente.contaespecial.numeroConta = rand() % 10000;
+                cliente.contaespecial.saldo = 0;
         printf("Sua conta foi ativada, o número é: %d \n", cliente.contaespecial.numeroConta);
-    }
+
 }
 
 //função finalizada e testada
@@ -191,21 +172,29 @@ int editaCliente()
 }
 
 int excluirCliente()
-{//falt ajustar
+{
     printf("\n----------Digite o CPF do cliente para exclui-lo----------\n");
 
     struct Cliente *atual;
     atual = agencia.inicio;
 
+    struct Cliente *anterior;
+    anterior = agencia.inicio;
+
+    
+
     char entradaCPF[12];
     scanf("%s", &*entradaCPF);
 
+
     while (atual != NULL)
     {
-        if (strcmp(entradaCPF, atual->proximo->cpf) == 0)
-        {
-            atual->proximo = atual->proximo;
+        printf("entrou no while da função");
 
+        if (strcmp(entradaCPF, atual->cpf) == 0)
+        {   
+            printf("entrou no if da função");
+            atual->proximo = atual->proximo->proximo;
         }
         atual = atual->proximo;
     }

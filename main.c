@@ -41,9 +41,15 @@ int main(void)
           if (entradaMenuGerente == 1)
           {
             struct Cliente cliente;
-            cliente = entradaDadosCliente(cliente);
+            cliente = entradaDadosCliente();
+
+                    cliente.contacorrente.saldo = 0;
+                            cliente.contapoupanca.saldo = 0;
+                                    cliente.contaespecial.saldo = 0;
+            ativaConta(cliente);
+
             cadastraCliente(cliente);
-            printf("Cadastro realizado com sucesso!");
+            printf("Cadastro realizado com sucesso!\n");
           }
 
           //função finalizada com sucesso
@@ -64,73 +70,76 @@ int main(void)
 
           if (entradaMenuGerente == 5)
           {
-            //funçao
+            //função inutil
           }
 
         } //fecha o while do gerente
       }
     } //fecha o if de comparação da senha
 
-    // if (entradaUser == 2)
-    // {
-    //   int entradaDeposito;
-    //   int entrada = 1;
-    //   while (entrada != 0)
-    //   {
+    if (entradaUser == 2)
+    {
+    int entrada = 1;
+    while (entrada != 0)
+    {
+        mostraMenuCliente();
+        scanf("%d", &entrada);
+        
+        if (entrada == 1)
+        {
+          
+            mostraMenuOpcoes(entrada);
+            int entradaDeposito;
+            scanf("%d", &entradaDeposito);
 
-    //     scanf("%d", &entrada);
-    //     if (entrada == 1)
-    //     {
+            if (entradaDeposito == 1)
+            {
+                depositarContaCorrente();
+            }
+            if (entradaDeposito == 2)
+            {
+                depositarContaPoupanca();
+            }
+            if (entradaDeposito == 3)
+            {
+                depositarContaEspecial();
+            }
+        }
+        if (entrada == 2)
+        {
+          int a = mostraMenuOpcoes(entrada);
 
-    //       mostraMenuOpcoes(entrada);
+          int entradaSaque;
+          scanf("%d", &entradaSaque);
+          if (entradaSaque == 1)
+          {
+            saqueContaCorrente();
+          }
 
-    //       scanf("%d", &entradaDeposito);
-    //       if (entradaDeposito == 1)
-    //       {
-    //         depositarContaCorrente();
-    //       }
-    //       if (entradaDeposito == 2)
-    //       {
-    //         depositarContaPoupanca();
-    //       }
-    //       if (entradaDeposito == 3)
-    //       {
-    //         depositarContaEspecial();
-    //       }
-    //     }
-    //     if (entrada == 2)
-    //     {
-    //       mostraMenuOpcoes(entrada);
+          if (entradaSaque == 2)
+          {
+          saqueContaPoupanca();
+          }
 
-    //       int entradaSaque;
-    //       scanf("%d", &entradaSaque);
-    //       if (entradaSaque == 1)
-    //       {
-    //         saqueContaCorrente();
-    //       }
+          if (entradaSaque == 3)
+          {
+            saqueContaEspecial();
+          }
+        }
+        if (entrada == 3)
+        { //função finalizada
+          printf("\n-----Consulta de saldo-----\n");
+          printf("Digite seu CPF: \n");
+          char entradaCPF[12];
+          scanf("%s", &*entradaCPF);
+          consultarSaldo(entradaCPF);
+        }
+    
+      }//fecha o while do menu do usuario
 
-    //       if (entradaSaque == 2)
-    //       {
+    }//fecha o if de entrada de usuario
 
-    //       }
+  } //fecha o while geral do sistema
 
-    //       if (entradaSaque == 3)
-    //       {
-    //         saqueContaEspecial();
-    //       }
-    //     }
-    //     if (entrada == 3)
-    //     { //função finalizada
-    //       printf("\n-----Consulta de saldo-----\n");
-    //       printf("Digite seu CPF: \n");
-    //       char entradaCPF[12];
-    //       scanf("%s", &*entradaCPF);
-    //       consultarSaldo(entradaCPF);
-    //     }
-    //   }
-    // }
-    //entrada como gerente
-  } //fecha if de comparação do login
-  //finaliza o sistema
   return 0;
-}
+}  //finaliza o sistema

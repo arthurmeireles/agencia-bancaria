@@ -1,8 +1,24 @@
-
 #include "agencia.h"
 #ifndef CLIENTE_H
 #define CLIENTE_H
 
+struct ContaCorrente{
+  int numeroConta;
+  int ativo;
+  float saldo;
+};
+struct ContaPoupanca
+{
+  int numeroConta;
+  int ativo;
+  float saldo;
+};
+struct ContaEspecial
+{
+  int numeroConta;
+  int ativo;
+  float saldo;
+};
 struct Cliente{
   char nome[255];
   char rg[12];
@@ -17,7 +33,6 @@ struct Cliente{
 
 struct Cliente cliente;
 
-
 int mostraMenuCliente(){
     printf("----------Menu Usuario--------\n");
     printf("Digite [0] para sair\n");
@@ -26,80 +41,61 @@ int mostraMenuCliente(){
     printf("Digite [3] para consultar saldo\n");
 }
 int depositarContaCorrente(){
-  printf("Digite o número da sua conta:\n");
-  int entradaConta;
+    struct Cliente *atual;
+    atual = agencia.inicio;
 
-  scanf("%d", &entradaConta);
-
-  struct Cliente *atual;
-  atual = agencia.inicio;
-
-  while (atual != NULL){
-    if (entradaConta == atual->contacorrente.numeroConta){
-      if (atual->contacorrente.ativo == 1){
-        printf("Digite o valor a ser depositado: \n");
-        float entradaValor;
-        scanf("%f", &entradaValor);
-        atual-> contacorrente.saldo += entradaValor;
-        printf("\nValor depositado\n");
-      }
-      else{
-        printf("Solicite o ativamento da conta antes de depositar\n");
-      }
+    printf("Digite seu CPF:\n");
+    char cpf[12];
+    scanf("%s", &*cpf);
+ 
+    while(atual != NULL){
+        if(strcmp(cpf, atual->cpf) == 0){
+            float entradaValor;
+            printf("Digite o valor a ser depositado!\n");
+            scanf("%f", &entradaValor);
+            atual->contacorrente.saldo = atual->contacorrente.saldo + entradaValor;
+        }
+        atual = atual->proximo;
     }
-  }
+  return 0;
+}
+int depositarContaPoupanca(){
+    struct Cliente *atual;
+    atual = agencia.inicio;
+
+    printf("Digite seu CPF:\n");
+    char cpf[12];
+    scanf("%s", &*cpf);
+ 
+    while(atual != NULL){
+        if(strcmp(cpf, atual->cpf) == 0){
+            float entradaValor;
+            printf("Digite o valor a ser depositado!\n");
+            scanf("%f", &entradaValor);
+            atual->contapoupanca.saldo = atual->contapoupanca.saldo + entradaValor;
+        }
+        atual = atual->proximo;
+    }
   return 0;
 }
 int depositarContaEspecial(){
-  struct Cliente *atual;
-  atual = agencia.inicio;
-  
-  printf("Digite o número da sua conta:\n");
-  int entradaConta;
-  scanf("%d", &entradaConta);
-  while (atual != NULL){
-    if (entradaConta == atual->contaespecial.numeroConta){
-      if (atual->contaespecial.ativo == 1){
-        printf("Digite o valor a ser depositado: \n");
-        float entradaValor;
-        scanf("%f", &entradaValor);
-        atual->contaespecial.saldo += entradaValor;
-        printf("\nValor depositado\n");
-      }
-      else
-      {
-        printf("Solicite o ativamento da conta antes de depositar\n");
-      }
-    }
-  }
-}
-int depositarContaPoupanca(){
+    struct Cliente *atual;
+    atual = agencia.inicio;
 
-  struct Cliente *atual;
-  atual = agencia.inicio
-  ;
-  printf("Digite o número da sua conta:\n");
-  int entradaConta;
-  scanf("%d", &entradaConta);
-
-  while (atual != NULL)
-  {
-    if (entradaConta == atual->contapoupanca.numeroConta)
-    {
-      if (atual->contapoupanca.ativo == 1)
-      {
-        printf("Digite o valor a ser depositado: \n");
-        float entradaValor;
-        scanf("%f", &entradaValor);
-        atual->contapoupanca.saldo += entradaValor;
-        printf("\nValor depositado\n");
-      }
-      else
-      {
-        printf("Solicite o ativamento da conta antes de depositar\n");
-      }
+    printf("Digite seu CPF:\n");
+    char cpf[12];
+    scanf("%s", &*cpf);
+ 
+    while(atual != NULL){
+        if(strcmp(cpf, atual->cpf) == 0){
+            float entradaValor;
+            printf("Digite o valor a ser depositado!\n");
+            scanf("%f", &entradaValor);
+            atual->contaespecial.saldo = atual->contaespecial.saldo + entradaValor;
+        }
+        atual = atual->proximo;
     }
-  }
+  return 0;
 }
 int mostraMenuOpcoes(int entrada){
   if(entrada == 1){
@@ -138,89 +134,113 @@ int consultarSaldo(char* cpf){
     atual = atual->proximo;
   }
 }
+
 int saqueContaCorrente(){
-  struct Cliente *atual;
-  atual = agencia.inicio;
-  
-  printf("Digite o número da sua conta:\n");
-  int entradaConta;
-  scanf("%d", &entradaConta);
-  while (atual != NULL)
-  {
-  
-    if (entradaConta == atual->contacorrente.numeroConta)
-    {
-      if (atual->contacorrente.ativo == 1)
-      {
+    struct Cliente *atual;
+    atual = agencia.inicio;
+
+    printf("Digite seu CPF:\n");
+    char cpf[12];
+    scanf("%s", &*cpf);
+ 
+    while(atual != NULL){
+        if(strcmp(cpf, atual->cpf) == 0){
         printf("Digite o valor a ser sacado: \n");
         float entradaValor;
         scanf("%f", &entradaValor);
         if (entradaValor <= atual->contacorrente.saldo)
         {
-          atual->contacorrente.saldo = atual->contacorrente.saldo - entradaValor;
-          printf("Saque realizado\n");
+          printf("Digite sua senha");
+          char entradaSenha[7];
+          scanf("%s", &*entradaSenha);
+
+
+          if (strcmp(entradaSenha, atual->senha) == 0){
+            atual->contacorrente.saldo = atual->contacorrente.saldo - entradaValor;
+            printf("Saque realizado\n");
+          }
+          else{
+            printf("Senha incorreta!\n");
+          }
+
         }
         else
         {
           printf("ERRO: voce não tem o valor disponivel\n");
         }
-      }
+      
     }
     atual = atual->proximo;
   }
  
 }
+
 int saqueContaPoupanca(){
-  struct Cliente *atual;
-  atual = agencia.inicio;
-  
-  printf("Digite o número da sua conta:\n");
-  int entradaConta;
-  scanf("%d", &entradaConta);
-  
-  while (atual != NULL)
-  {
-    if (entradaConta == atual->contapoupanca.numeroConta)
-    {
-      if (atual->contapoupanca.ativo == 1)
-      {
+    struct Cliente *atual;
+    atual = agencia.inicio;
+
+    printf("Digite seu CPF:\n");
+    char cpf[12];
+    scanf("%s", &*cpf);
+ 
+    while(atual != NULL){
+        if(strcmp(cpf, atual->cpf) == 0){
         printf("Digite o valor a ser sacado: \n");
         float entradaValor;
         scanf("%f", &entradaValor);
         if (entradaValor <= atual->contapoupanca.saldo)
         {
-          atual->contapoupanca.saldo = atual->contapoupanca.saldo - entradaValor;
-          printf("Saque realizado\n");
+          printf("Digite sua senha");
+          char entradaSenha[7];
+          scanf("%s", &*entradaSenha);
+
+
+          if (strcmp(entradaSenha, atual->senha) == 0){
+            atual->contapoupanca.saldo = atual->contapoupanca.saldo - entradaValor;
+            printf("Saque realizado\n");
+          }
+          else{
+            printf("Senha incorreta!\n");
+          }
+
         }
         else
         {
-          printf("ERRO: voce não tem o valor disponivel \n");
+          printf("ERRO: voce não tem o valor disponivel\n");
         }
-      }
+      
     }
     atual = atual->proximo;
   }
 }
 int saqueContaEspecial(){
-  struct Cliente *atual;
-  atual = agencia.inicio;
+    struct Cliente *atual;
+    atual = agencia.inicio;
 
-  printf("Digite o número da sua conta:\n");
-  int entradaConta;
-  scanf("%d", &entradaConta);
+    printf("Digite seu CPF:\n");
+    char cpf[12];
+    scanf("%s", &*cpf);
+ 
+    while(atual != NULL){
+        if(strcmp(cpf, atual->cpf) == 0){
+          
+          printf("Digite o valor a ser sacado: \n");
+          float entradaValor;
+          scanf("%f", &entradaValor);
+          
+          printf("Digite sua senha\n");
+          char entradaSenha[7];
+          scanf("%s", &*entradaSenha);
 
-  while (atual != NULL)
-  {
-    if (entradaConta == atual->contaespecial.numeroConta)
-    {
-      if (atual->contaespecial.ativo == 1)
-      {
-        printf("Digite o valor a ser sacado: \n");
-        float entradaValor;
-        scanf("%f", &entradaValor);
-        atual->contaespecial.saldo = atual->contaespecial.saldo - entradaValor;
-        printf("Saque realizado \n");
-      }
+
+          if (strcmp(entradaSenha, atual->senha) == 0){
+            atual->contaespecial.saldo = atual->contaespecial.saldo - entradaValor;
+            printf("Saque realizado\n");
+          }
+          else{
+            printf("Senha incorreta!\n");
+          }
+      
     }
     atual = atual->proximo;
   }
